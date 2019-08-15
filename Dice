@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -5,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DiceRoll
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -26,86 +27,102 @@ namespace DiceRoll
             int bet = int.Parse(Console.ReadLine());
             Console.Write("Please choose one of the below options to start!");
 
+            
 
-            bool exit = false;
-            do
-            {
-                
-                Random rand = new Random();
-                int diceRoll = rand.Next(1, 101);
-                
-                bool reload = false;
+                bool exit = false;
                 do
                 {
-                    
-                    Console.WriteLine("\nChoose an action:\n" +
-                            "O) Over 50\n" +
-                            "U) Under 50\n" +
-                            "B) Player Balance\n" +
-                            "E) Exit");
-                    ConsoleKey userChoice = Console.ReadKey(true).Key;
-                    Console.Clear();
 
-                    switch (userChoice)
+                    Random rand = new Random();
+                    int diceRoll = rand.Next(1, 101);
+
+                    bool reload = false;
+                    do
                     {
-                        case ConsoleKey.O:
-                            //TODO Dice function goes here
-                            //print out if user win/loss
-                            if (diceRoll &gt; 50)
-                            {
-                                Console.WriteLine("Dice Number is: " + diceRoll);
-                                Console.WriteLine("You win!");
-                                winStreak++;
-                                balance += bet;
-                                reload = true;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Dice Number is: " + diceRoll);
-                                Console.WriteLine("You lose!");
-                                loseStreak++;
-                                balance -= bet;
-                                reload = true;
-                            }
-                            break;
-                        case ConsoleKey.U:
-                            //TODO Dice function goes here
-                            //print out if user win/loss
-                            if (diceRoll &lt; 50)
-                            {
-                                Console.WriteLine("Dice Number is: " + diceRoll);
-                                Console.WriteLine("You win!");
-                                winStreak++;
-                                balance += bet;
-                                reload = true;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Dice Number is: " + diceRoll);
-                                Console.WriteLine("You lose!");
-                                loseStreak++;
-                                balance -= bet;
-                                reload = true;
-                            }
-                            break;
-                        case ConsoleKey.B:
-                            //TODO Balance function display here
-                            Console.WriteLine("Balance: " + balance + "\nWin Streak: " + winStreak + "\nLose Streak: " + loseStreak);
-                            break;
-                        case ConsoleKey.E:
-                            Console.WriteLine("Thank you for playing. See you again! ");
-                            exit = true;
-                            break;
 
-                        default:
-                            Console.WriteLine("Input not recognized. Please try again!");
-                            break;
-                    }
-                } while (!reload &amp;&amp; !exit);
-            } while (!exit);
-            
+                        Console.WriteLine("\nChoose an action:\n" +
+                                "O) Over 50\n" +
+                                "U) Under 50\n" +
+                                "M) Use Martingale\n" +
+                                "B) Player Balance\n" +
+                                "E) Exit");
+                        ConsoleKey userChoice = Console.ReadKey(true).Key;
+                        Console.Clear();
+
+                        switch (userChoice)
+                        {
+                            case ConsoleKey.O:
+                                //TODO Dice function goes here
+                                //print out if user win/loss
+                                if (balance >= bet && diceRoll > 50)
+                                {
+                                    Console.WriteLine("Dice Number is: " + diceRoll);
+                                    Console.WriteLine("You win!");
+                                    winStreak++;
+                                    balance += bet;
+                                    reload = true;
+                                }
+                                else if (balance >= bet)
+                                                           
+                                {
+                                    Console.WriteLine("Dice Number is: " + diceRoll);
+                                    Console.WriteLine("You lose!");
+                                    loseStreak++;
+                                    balance -= bet;
+                                    reload = true;
+                                } else
+                                {
+                                    Console.WriteLine("Not enough money!");
+                                }                                   
+                                
+                                break;
+                            case ConsoleKey.U:
+                                //TODO Dice function goes here
+                                //print out if user win/loss
+                                if (balance >= bet && diceRoll < 50)
+                                {
+                                    Console.WriteLine("Dice Number is: " + diceRoll);
+                                    Console.WriteLine("You win!");
+                                    winStreak++;
+                                    balance += bet;
+                                    reload = true;
+                                }
+                                else if (balance >= bet)                               
+                                {
+                                    Console.WriteLine("Dice Number is: " + diceRoll);
+                                    Console.WriteLine("You lose!");
+                                    loseStreak++;
+                                    balance -= bet;
+                                    reload = true;
+                                } else
+                                {
+                                    Console.WriteLine("Not enough money!");
+                                }                                    
+                                
+                                break;
+                            case ConsoleKey.B:
+                                //TODO Balance function display here
+                                Console.WriteLine("Balance: " + balance + "\nWin Streak: " + winStreak + "\nLose Streak: " + loseStreak);
+                                break;
+                            case ConsoleKey.M:
+                                bet = bet * 2;
+
+                                break;
+                            case ConsoleKey.E:
+                                Console.WriteLine("Thank you for playing. See you again! ");
+                                exit = true;
+                                break;
+
+                            default:
+                                Console.WriteLine("Input not recognized. Please try again!");
+                                break;
+                        }
+                    } while (!reload && !exit);
+                } while (!exit);           
 
         }
         
     }
+
+    
 }
