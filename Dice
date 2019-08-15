@@ -1,0 +1,111 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DiceRoll
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Title = "Dice game";
+            Console.Write("Welcome to Quan Dice!This game will pick a random number from 1 - 100 and user will choose Over 50 or Under 50. Goodluck!");
+            Console.WriteLine("");
+            int winStreak = 0;
+            int loseStreak = 0;
+            int balance = 0;
+            
+
+
+            Console.Write("Please choose how much do you want to deposit to your balance: ");
+           
+            int userDep = int.Parse(Console.ReadLine());
+            balance += userDep;
+            Console.Write("How much do you want to bet: ");
+            int bet = int.Parse(Console.ReadLine());
+            Console.Write("Please choose one of the below options to start!");
+
+
+            bool exit = false;
+            do
+            {
+                
+                Random rand = new Random();
+                int diceRoll = rand.Next(1, 101);
+                
+                bool reload = false;
+                do
+                {
+                    
+                    Console.WriteLine("\nChoose an action:\n" +
+                            "O) Over 50\n" +
+                            "U) Under 50\n" +
+                            "B) Player Balance\n" +
+                            "E) Exit");
+                    ConsoleKey userChoice = Console.ReadKey(true).Key;
+                    Console.Clear();
+
+                    switch (userChoice)
+                    {
+                        case ConsoleKey.O:
+                            //TODO Dice function goes here
+                            //print out if user win/loss
+                            if (diceRoll &gt; 50)
+                            {
+                                Console.WriteLine("Dice Number is: " + diceRoll);
+                                Console.WriteLine("You win!");
+                                winStreak++;
+                                balance += bet;
+                                reload = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Dice Number is: " + diceRoll);
+                                Console.WriteLine("You lose!");
+                                loseStreak++;
+                                balance -= bet;
+                                reload = true;
+                            }
+                            break;
+                        case ConsoleKey.U:
+                            //TODO Dice function goes here
+                            //print out if user win/loss
+                            if (diceRoll &lt; 50)
+                            {
+                                Console.WriteLine("Dice Number is: " + diceRoll);
+                                Console.WriteLine("You win!");
+                                winStreak++;
+                                balance += bet;
+                                reload = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Dice Number is: " + diceRoll);
+                                Console.WriteLine("You lose!");
+                                loseStreak++;
+                                balance -= bet;
+                                reload = true;
+                            }
+                            break;
+                        case ConsoleKey.B:
+                            //TODO Balance function display here
+                            Console.WriteLine("Balance: " + balance + "\nWin Streak: " + winStreak + "\nLose Streak: " + loseStreak);
+                            break;
+                        case ConsoleKey.E:
+                            Console.WriteLine("Thank you for playing. See you again! ");
+                            exit = true;
+                            break;
+
+                        default:
+                            Console.WriteLine("Input not recognized. Please try again!");
+                            break;
+                    }
+                } while (!reload &amp;&amp; !exit);
+            } while (!exit);
+            
+
+        }
+        
+    }
+}
